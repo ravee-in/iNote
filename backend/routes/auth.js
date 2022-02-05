@@ -4,11 +4,12 @@ const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs/dist/bcrypt');
 const jwt = require('jsonwebtoken');
+const fetchUser = require('../middleware/fetchUser.js');
 
 const JWT_SECRET = "iNoteSAFEkey009";
 
 
-// Create a User using: POST "/api/auth/createuser". No Login required
+//Route 1 :: Create a User using: POST "/api/auth/createuser". No Login required
 router.post('/createuser', [
 
     // adding validations with custom msg
@@ -28,7 +29,7 @@ router.post('/createuser', [
 
     try {
 
-       // Creating User in the DB || Check wether user exist with same email 
+        // Creating User in the DB || Check wether user exist with same email 
         let user = await User.findOne({ email: req.body.email });
         if (user) {
             return res.status(400).json({ error: "Sorry! This email is already used." })
@@ -46,17 +47,17 @@ router.post('/createuser', [
         });
 
         const data = {
-            user:{
-               id: user.id,
+            user: {
+                id: user.id,
             }
         }
 
         // adding Authentication Token using JWT
-        
+
         const authToken = jwt.sign(data, JWT_SECRET);
         console.log(authToken);
 
-        res.json({authToken})
+        res.json({ authToken })
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Some error occured")
@@ -66,6 +67,73 @@ router.post('/createuser', [
     //   res.json({error: "Please enter a unique Email", message: error.message})});  //show error message
 
     // res.send(req.body);
+})
+
+
+//Route 2 :: Authenticate a User using: POST "/api/auth/login". No Login required
+
+router.post('/login', [
+
+    body('email', 'Enter a valid EMail').isEmail(),
+    body('password', 'Cannot be left blank').exists(),
+], async (req, res) => {
+
+    const errors = validationResult(req);
+
+    // Checking Validation
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { email, password } = req.body;
+    try {
+        let user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ errors: "Please login with correct credentials." });
+        }
+
+        const passCompare = await bcrypt.compare(password, user.password);
+        if (!passCompare) {
+            return res.status(400).json({ errors: "Please login with correct credentials." });
+        }
+
+        const data = {
+            user: {
+                id: user.id,
+            }
+        }
+
+        // adding Authentication Token using JWT
+
+        const authToken = jwt.sign(data, JWT_SECRET);
+        console.log(authToken);
+
+        res.json({ authToken })
+
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send("Server 500 error");
+    }
+
+})
+
+
+//Route 3 :: Get logged In user deatils : POST "/api/auth/getuser". No Login required
+
+
+router.post('/getuser',fetchUser, async (req, res) => {
+
+    const { email, password } = req.body;
+    
+    try {
+        userId = req.user.id;
+        const user = await User.findById(userId).select("-password");
+        res.send(user);
+    } catch (error) {
+        console.error(error.message);
+            res.status(500).send("Server 500 error");
+    }
+
 })
 
 
