@@ -118,7 +118,7 @@ router.post('/login', [
 })
 
 
-//Route 3 :: Get logged In user deatils : POST "/api/auth/getuser". No Login required
+//Route 3 :: Get logged In user deatils : POST "/api/auth/getuser". Login required
 
 
 router.post('/getuser',fetchUser, async (req, res) => {
@@ -131,7 +131,7 @@ router.post('/getuser',fetchUser, async (req, res) => {
         res.send(user);
     } catch (error) {
         console.error(error.message);
-            res.status(500).send("Server 500 error");
+        res.status(500).send("Server 500 error");
     }
 
 })
