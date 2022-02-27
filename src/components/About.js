@@ -1,17 +1,11 @@
-import React, {useContext, useEffect} from 'react';
-import noteContext from '../context/notes/noteContext';
+import React from 'react'
 
 const About = () => {
-
-  const a = useContext(noteContext);
-  useEffect(() => {
-    a.update();
-  }, [])
-  
-
-  return (
-    <div>About {a.state.name} | {a.state.class}</div>
-  )
+    return (
+        <div className='col-md-10 bg-main-color'>
+            This is About
+        </div>
+    )
 }
 
 export default About

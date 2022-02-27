@@ -10,12 +10,13 @@ const Addnote = () => {
     const [note, setNote] = useState({
         title:"",
         description:"",
-        tag:"Default"
+        tag:""
     })
     
     const handleClick = (e) =>{
         e.preventDefault();
         addNote(note.title, note.description, note.tag);
+        setNote({title:"", description:"", tag:""})
     }
     const onChange = (e)=>{
         setNote({...note, [e.target.name]: e.target.value})
@@ -24,23 +25,24 @@ const Addnote = () => {
     return (
         <div>
             <div className="headerNotes">
-                <h3>Add Notes</h3>
+                <h3 className='colTitle px-0'>Add New Note</h3>
             </div>
             <div className="NotesBody">
                 <form>
                     <div className="mb-3">
                         <label htmlFor="title" className="form-label">Your Note Title</label>
-                        <input type="text" className="form-control" id="title" name='title' onChange={onChange}/>
+                        <input type="text" className="form-control rounded-0 bg-dark-main" id="title" value={note.title} name='title' onChange={onChange} minLength={5} required/>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="description" className="form-label">Description</label>
-                        <input type="text" className="form-control" id="description" name='description' onChange={onChange}/>
+                        <textarea type="text" rows={10} className="form-control rounded-0 bg-dark-main" id="description" value={note.description} name='description' onChange={onChange} minLength={5} required></textarea>
+                        <p className='text-end'><small>{note.description.length} Characters</small></p>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="tag" className="form-label">Tag</label>
-                        <input type="text" className="form-control" id="tag" name='tag' onChange={onChange}/>
+                        <input type="text" className="form-control rounded-0 bg-dark-main" id="tag" value={note.tag} name='tag' onChange={onChange}/>
                     </div>
-                    <button type="submit" className="btn btn-primary" onClick={handleClick}>Add Note</button>
+                    <button disabled={note.description.length<=5} type="submit" className="btn btn-primary btn-bg-main-color rounded-0" onClick={handleClick}>Add Note</button>
                 </form>
             </div>
         </div>

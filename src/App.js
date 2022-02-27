@@ -15,10 +15,12 @@ function App() {
     <>
       <NoteState>
         <Router>
-          <Navbar />
-          <Alert message="ReactJs Course"/>
-          <div className="container">
-            <Switch>
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-md-2 p-0 bg-dark-main ">
+                <Navbar />
+              </div>
+              <Switch>
               <Route exact path="/">
                 <Home />
               </Route>
@@ -26,7 +28,10 @@ function App() {
                 <About />
               </Route>
             </Switch>
+            </div>
           </div>
+          
+          <Alert message="ReactJs Course"/>
         </Router>
       </NoteState>
     </>
