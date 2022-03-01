@@ -14,7 +14,7 @@ const NoteState = (props) => {
         const response = await fetch(`${host}/api/notes/fetchallnotes`, {
             method: 'GET',
             headers: {
-                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFmZThlYzhmNTI4ZjExYTVlYWU5YTk4In0sImlhdCI6MTY0NDA3ODQyMX0.lrvYUnVSYUOn0P9Un2NhM5DKGPbrM6zj4BnXY34Eg9E',
+                'auth-token': localStorage.getItem('token'),
                 'Content-Type': 'application/json'
             },
         });
@@ -31,7 +31,7 @@ const NoteState = (props) => {
         const response = await fetch(`${host}/api/notes/addnote`, {
             method: 'POST',
             headers: {
-                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFmZThlYzhmNTI4ZjExYTVlYWU5YTk4In0sImlhdCI6MTY0NDA3ODQyMX0.lrvYUnVSYUOn0P9Un2NhM5DKGPbrM6zj4BnXY34Eg9E',
+                'auth-token': localStorage.getItem('token'),
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ title, description, tag })
@@ -48,7 +48,7 @@ const NoteState = (props) => {
         const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
             method: 'DELETE',
             headers: {
-                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFmZThlYzhmNTI4ZjExYTVlYWU5YTk4In0sImlhdCI6MTY0NDA3ODQyMX0.lrvYUnVSYUOn0P9Un2NhM5DKGPbrM6zj4BnXY34Eg9E',
+                'auth-token': localStorage.getItem('token'),
                 'Content-Type': 'application/json'
             }
         });
@@ -66,7 +66,7 @@ const NoteState = (props) => {
         const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
             method: 'PUT',
             headers: {
-                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFmZThlYzhmNTI4ZjExYTVlYWU5YTk4In0sImlhdCI6MTY0NDA3ODQyMX0.lrvYUnVSYUOn0P9Un2NhM5DKGPbrM6zj4BnXY34Eg9E',
+                'auth-token': localStorage.getItem('token'),
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ title, description, tag })

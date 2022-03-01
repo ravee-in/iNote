@@ -74,7 +74,16 @@ a.iNote_nav-link.active {
   border: none;
   background: var(--dark-main);
 }
-
+.userAuth a {
+  background: var(--main-color);
+}
+.userAuth a:focus {
+  box-shadow: none;
+}
+.userAuth {
+  display: flex;
+  flex-direction: column;
+}
 .btn.btn-sm-iNote {
   width: 35px;
   height: 35px;
@@ -101,6 +110,9 @@ h3.colTitle {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+.userAuth button {
+  background: var(--main-color);
 }
 .App {
   text-align: center;
