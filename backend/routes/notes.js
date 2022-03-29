@@ -24,7 +24,6 @@ router.get('/fetchallnotes', fetchUser, async (req, res) => {
 
 
 //Route 2 :: Add a new Note : POST "/api/auth/addnote". Login required
-
 router.post('/addnote', fetchUser, [
     body('title', 'Enter a valid title').isLength({ min: 3 }),
     body('description', 'Description must be of 5 characters minimum').isLength({ min: 5 }),
@@ -58,7 +57,6 @@ router.post('/addnote', fetchUser, [
 
 
 //Route 3 :: Update Note : PUT "/api/auth/updatenote". Login required
-
 router.put('/updatenote/:id', fetchUser, async (req, res) => {
 
     try {

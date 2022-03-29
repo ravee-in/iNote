@@ -5,12 +5,16 @@
   --dark-main: #2e4950;
   --light-main: #4d6b74;
   --accent: #f4f4f4;
+  --art_color: #FFD32D;
 }
 body {
 	font-family: Ubuntu,sans-serif;
 	font-size: 0.9rem;
 	color: var(--accent);
 	line-height: 1.5em
+}
+.colorYellow{
+  color: var(--art_color);
 }
 .bg-main-color{
   background-color: var(--main-color);
@@ -39,7 +43,6 @@ body {
 .iNote_navbar_Items li.nav-item {
   padding: 0;
   background: var(--main-color);
-  border-bottom: 1px solid var(--darkShade);
   color: var(--accent);
 }
 ul.iNote_navbar_Items {
@@ -49,26 +52,26 @@ ul.iNote_navbar_Items {
 .iNote_navbar_Items li.nav-item a {
   text-decoration: none;
   color: var(--accent);
-  padding: 10px 25px;
+  padding: 10px;
   display: block;
+  margin: 0 15px 10px 15px;
+  background: var(--dark-main);
 }
 a.iNote_nav-link.active {
   border-left: 5px solid var(--accent);
-}
-.iNote_navbar-collapse {
-  margin-top: 15px;
 }
 .iNote_navbar .navbar-brand {
   font-size: 2rem;
   color: var(--accent);
   display: block;
-  padding: 10px 25px;
+  padding: 10px;
   line-height: 1.2;
 }
 .NotesWRap_Header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 10px 0;
 }
 .NotesWrap .card {
   border: none;
@@ -76,6 +79,7 @@ a.iNote_nav-link.active {
 }
 .userAuth a {
   background: var(--main-color);
+  margin: 0 15px 10px 15px;
 }
 .userAuth a:focus {
   box-shadow: none;
@@ -104,7 +108,10 @@ h3.colTitle {
   font-size: 1.25rem;
   color: var(--accent);
   display: block;
-  padding: 10px 25px;
+  margin: 0;
+}
+.headerNotes {
+  padding: 10px 0;
 }
 .NotesWrap .card-footer {
   display: flex;
@@ -114,41 +121,56 @@ h3.colTitle {
 .userAuth button {
   background: var(--main-color);
 }
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.profileView {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  height: 100%;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+}
+.dotsWrap {
+  display: flex;
+  flex-direction: column;
+}
+.dotsWrap i {
+  font-size: 0.5rem;
+  margin-bottom: 2px;
 }
 
-.App-link {
-  color: #61dafb;
+footer.main-footer {
+  margin-top: 25px;
+  padding: 10px 15px;
+  text-align: center;
+  background-color: var(--dark-main);
+}
+.appWrap {
+  min-height: 100vh;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.modalFooter button {
+  flex: 1;
+  border-radius: 0;
+  margin: 0 5px;
+}
+
+.modalFooter {
+  display: flex;
+  padding: 10px;
+}
+.row.notesListView {
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+.notesListView::-webkit-scrollbar {
+  width: 0.4rem;
+}
+.notesListView::-webkit-scrollbar-thumb {
+  background-color: var(--dark-main);
+}
+
+::-webkit-scrollbar {
+  width: 0.4rem;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--accent);
 }

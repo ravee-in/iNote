@@ -21,11 +21,10 @@ function Notes() {
     useEffect(() => {
         if (localStorage.getItem('token')) {
             getAllNotes();
-        }else{
+        } else {
             history.push('/login');
         }
-        // eslint-disable-next-line
-    }, [])
+    }, [history])
 
     const updateNote = (currentNote) => {
         ref.current.click();
@@ -90,7 +89,7 @@ function Notes() {
                         <h3 className='colTitle colTitle px-0'>Your Notes</h3>
                         <button className='btn btn-sm-iNote' onClick={() => { addNoteForm() }} title="Add New Note"><i className="fa fa-plus" aria-hidden="true"></i></button>
                     </div>
-                    <div className="row">
+                    <div className="row notesListView">
                         <div className="col-12">
                             <p className='m-0'>
                                 {notes.length === 0 && "No Notes to Display."}
@@ -103,16 +102,22 @@ function Notes() {
                 </div>
             </div>
             <div className="col-md-6 bg-main-color">
-                {addForm ? <Addnote /> : null}
-
-                {/* View Selected Note */}
-                <div className='noteView'>
-                    <h3 className='colTitle px-0'>{noteView.etitle}</h3>
+                {addForm ? <Addnote /> : <div className='noteView py-5'>
+                    <h3 className='colTitle px-0 mt-2'>{noteView.etitle}</h3>
                     <p>
                         {noteView.edescription}
                     </p>
                     <p><small>{noteView.etag}</small></p>
-                </div>
+                </div>}
+
+                {/* View Selected Note */}
+                {/* <div className='noteView py-5'>
+                    <h3 className='colTitle px-0 mt-2'>{noteView.etitle}</h3>
+                    <p>
+                        {noteView.edescription}
+                    </p>
+                    <p><small>{noteView.etag}</small></p>
+                </div> */}
                 {/* View Selected Note */}
             </div>
 
@@ -145,8 +150,10 @@ function Notes() {
                                 </div>
                             </form>
                         </div>
-                        <button type="button" ref={refClose} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" className="btn btn-primary btn-bg-main-color" onClick={handleClick}>Update</button>
+                        <div className="modalFooter">
+                            <button type="button" ref={refClose} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-success" onClick={handleClick}>Update</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -157,3 +164,4 @@ function Notes() {
 }
 
 export default Notes
+

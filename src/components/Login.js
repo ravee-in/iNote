@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router-dom';
+
+
 
 const Login = (props) => {
+    
 
     const [creds, setCreds] = useState({
         email: '',
@@ -9,7 +12,7 @@ const Login = (props) => {
     })
     let history = useHistory();
 
-    const host = "http://localhost:5000";
+    const host = "https://inoteapi.ravee.in";
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,8 +28,10 @@ const Login = (props) => {
         if (json.success) {
             // Save AUTH Token and redirect to Load Notes on Home
             localStorage.setItem('token', json.authToken);
+            localStorage.setItem('username', json.data['user'].name);
             props.showAlert('Hello, You are Logged In', 'success');
             history.push('/');
+            
         } else {
             props.showAlert('Please use correct credentials', 'warning');
         }
@@ -38,11 +43,21 @@ const Login = (props) => {
         setCreds({ ...creds, [e.target.name]: e.target.value })
     }
 
+    
+    // useEffect(() => {
+    //     let isAuth = localStorage.getItem('token');
+    //     if (isAuth !== '') {
+    //       history.push('/')
+    //     }else{
+    //         history.push('/login')
+    //     }
+    //   }, [history])
+
     return (
         <div className='col-md-10 bg-main-color'>
             
             <div className="loginFormWrap p-5">
-                <form className='w-50 m-auto' onSubmit={handleSubmit}>
+                <form className='col-12 col-md-6 m-auto' onSubmit={handleSubmit}>
                 <h3 className="colTitle px-0 mb-3">Login to access your iNote Space.</h3>
                     <div className="mb-2">
                         <label htmlFor="usernameID" className="form-label">Email address / Username</label>
@@ -52,10 +67,6 @@ const Login = (props) => {
                     <div className="mb-2">
                         <label htmlFor="passwordID" className="form-label">Password</label>
                         <input type="password" className="form-control rounded-0 bg-dark-main" value={creds.password} onChange={onChange} name='password' id="passwordID" />
-                    </div>
-                    <div className="mb-2 form-check">
-                        <input type="checkbox" className="form-check-input" id="rememberID" />
-                        <label className="form-check-label" htmlFor="rememberID">Remember Me</label>
                     </div>
                     <button type="submit" className="btn btn-primary btn-bg-main-color rounded-0">Log In</button>
                 </form>

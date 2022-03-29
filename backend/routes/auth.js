@@ -11,7 +11,6 @@ const JWT_SECRET = "iNoteSAFEkey009";
 
 //Route 1 :: Create a User using: POST "/api/auth/createuser". No Login required
 router.post('/createuser', [
-
     // adding validations with custom msg
     body('email', 'Enter a valid EMail').isEmail(),
     body('password', 'Try some other').isLength({ min: 5 }),
@@ -21,12 +20,10 @@ router.post('/createuser', [
     // Return Bad Request for errors and error msg
 
     const errors = validationResult(req);
-
     // Checking Validation
     if (!errors.isEmpty()) {
         return res.status(400).json({ success, errors: errors.array() });
     }
-
     try {
 
         // Creating User in the DB || Check wether user exist with same email 
@@ -36,7 +33,6 @@ router.post('/createuser', [
         }
 
         // Using bcryptjs to add Hashing Salt to password
-
         const salt = await bcrypt.genSalt(10);
         const secPass = await bcrypt.hash(req.body.password, salt);
 
@@ -51,13 +47,11 @@ router.post('/createuser', [
                 id: user.id,
             }
         }
-
         // adding Authentication Token using JWT
-
         const authToken = jwt.sign(data, JWT_SECRET);
         console.log(authToken);
         success = true,
-        res.json({ success, authToken })
+            res.json({ success, authToken })
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Some error occured")
@@ -71,9 +65,7 @@ router.post('/createuser', [
 
 
 //Route 2 :: Authenticate a User using: POST "/api/auth/login". No Login required
-
 router.post('/login', [
-
     body('email', 'Enter a valid EMail').isEmail(),
     body('password', 'Cannot be left blank').exists(),
 ], async (req, res) => {
@@ -92,13 +84,11 @@ router.post('/login', [
             success = false
             return res.status(400).json({ success, errors: "Please login with correct credentials." });
         }
-
         const passCompare = await bcrypt.compare(password, user.password);
         if (!passCompare) {
             success = false
             return res.status(400).json({ success, errors: "Please login with correct credentials." });
         }
-
         const data = {
             user: {
                 id: user.id,
@@ -109,7 +99,6 @@ router.post('/login', [
         // adding Authentication Token using JWT
 
         const authToken = jwt.sign(data, JWT_SECRET);
-
         console.log(authToken);
         success = true
         res.json({ success, authToken, data })
@@ -118,28 +107,21 @@ router.post('/login', [
         console.error(error.message);
         res.status(500).send("Server 500 error");
     }
-
 })
 
 
 //Route 3 :: Get logged In user deatils : POST "/api/auth/getuser". Login required
-
-
 router.post('/getuser', fetchUser, async (req, res) => {
 
     const { email, password } = req.body;
-
     try {
-        userId = req.user.id;
+        const userId = req.user.id;
         const user = await User.findById(userId).select("-password");
         res.send(user);
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Server 500 error");
     }
-
 })
-
-
 
 module.exports = router;

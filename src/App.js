@@ -10,9 +10,11 @@ import Alert from './components/Alert';
 import Home from './components/Home';
 import About from './components/About';
 import NoteState from './context/notes/NoteState';
+import UserState from './context/user/UserState';
 import Login from './components/Login';
 import Signup from './components/Signup';
-
+import Profile from './components/Profile';
+import Footer from './components/Footer';
 function App() {
 
 
@@ -31,10 +33,12 @@ function App() {
   return (
     <>
       <NoteState>
+        <UserState>
         <Router>
+          <div className="appWrap">
           <div className="container-fluid">
             <div className="row">
-              <div className="col-md-2 p-0 bg-dark-main ">
+              <div className="col-md-2 p-0">
                 <Navbar />
               </div>
               <Switch>
@@ -43,6 +47,9 @@ function App() {
                 </Route>
                 <Route exact path="/about">
                   <About />
+                </Route>
+                <Route exact path="/profile">
+                  <Profile />
                 </Route>
                 <Route exact path="/login">
                   <Login showAlert={showAlert} />
@@ -54,7 +61,10 @@ function App() {
             </div>
           </div>
           <Alert alert={alert} />
+          </div>
+            <Footer />
         </Router>
+        </UserState>
       </NoteState>
     </>
   );
